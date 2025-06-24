@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/deepSDF-Latent-Space-Explorer/static/css/main.b1dbd3da.css",
-    "main.js": "/deepSDF-Latent-Space-Explorer/static/js/main.278968df.js",
+    "main.js": "/deepSDF-Latent-Space-Explorer/static/js/main.980bf025.js",
     "index.html": "/deepSDF-Latent-Space-Explorer/index.html",
     "main.b1dbd3da.css.map": "/deepSDF-Latent-Space-Explorer/static/css/main.b1dbd3da.css.map",
-    "main.278968df.js.map": "/deepSDF-Latent-Space-Explorer/static/js/main.278968df.js.map"
+    "main.980bf025.js.map": "/deepSDF-Latent-Space-Explorer/static/js/main.980bf025.js.map"
   },
   "entrypoints": [
     "static/css/main.b1dbd3da.css",
-    "static/js/main.278968df.js"
+    "static/js/main.980bf025.js"
   ]
 }
