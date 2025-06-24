@@ -1,20 +1,71 @@
-# VAE Latent Space Explorer
+# DeepSDF Auto-Decoder Latent Space Explorer
 
 <p align="center">
-  <img alt="demo" src="https://media.giphy.com/media/V8MF8wIJDGkbTQv3E1/giphy.gif" width="75%">
+  <img alt="DeepSDF Auto-Decoder Latent Space Explorer Demo" src="asserts/autodecoder.gif" width="75%">
 </p>
 
-## [Try the demo!](https://tayden.github.io/VAE-Latent-Space-Explorer/)
-
 ### About
-This application is a toy visualization that allows you to generate new images of 28x28 numerical digits using a variational autoencoder in the browser.
+This application is an interactive visualization that allows you to explore the latent space of 2D geometric shapes generated using an auto-decoder approach inspired by the [DeepSDF paper](https://arxiv.org/pdf/1901.05103) by Park et al. Unlike traditional VAEs, auto-decoders directly optimize latent codes for each shape along with the decoder network, providing a more direct and interpretable latent representation.
 
-### Implementation details
+The visualization generates four basic geometric shapes (circle, triangle, square, hexagon) as signed distance fields (SDFs) and learns a 2D latent space representation that can be explored interactively in the browser.
 
-The variational autoencoder was implemented using Keras and the relevant code is located in the scripts directory in a Jupyter notebook.
-Once the model is trained, the architecture and weights are saved in a format that can be ingested by tensorflow-js. Tensorflow-js handles
-implementing the model architecture and loading the weight in the browser. By leveraging WebGL, the model can efficient generate new image samples when given an appropriate latent space vector in the client browser.
+> **Reference**: Park, J. J., Florence, P., Straub, J., Newcombe, R., & Lovegrove, S. (2019). DeepSDF: Learning Continuous Signed Distance Representations for Shape Completion. *Computer Vision and Pattern Recognition (CVPR)*. [arXiv:1901.05103](https://arxiv.org/pdf/1901.05103)
 
-The application uses React.js for interface updates along with html Canvas to draw the image matrices. D3.js was used to generate the scatterplot and handle hover events.
+### Implementation Details
 
-_Created by Taylor Denouden (April 2018)_
+The auto-decoder model was implemented using TensorFlow/Keras and the training code is located in the `scripts/AutoDecoder.ipynb` Jupyter notebook. The model consists of:
+
+1. **Learnable latent codes**: Each shape has its own optimizable latent vector (2D for visualization)
+2. **Decoder network**: Maps from latent space to 28x28 SDF images
+3. **Joint optimization**: Both latent codes and decoder weights are optimized simultaneously
+
+Key features:
+- **SDF Generation**: Uses mathematical SDF functions to generate perfect geometric shapes
+- **Auto-Decoder Training**: Direct optimization of latent codes without an encoder
+- **Interactive Exploration**: Real-time generation of shapes by hovering over the latent space
+- **TensorFlow.js Integration**: Model runs entirely in the browser using WebGL acceleration
+
+### Technical Stack
+
+- **Backend Training**: TensorFlow/Keras, NumPy, Matplotlib
+- **Frontend**: React.js for UI, HTML Canvas for image rendering
+- **Visualization**: D3.js for interactive scatter plot
+- **Model Deployment**: TensorFlow.js for in-browser inference
+- **Shape Generation**: Custom SDF (Signed Distance Field) functions
+
+### Project Structure
+
+```
+├── scripts/
+│   ├── AutoDecoder.ipynb     # Main training notebook
+│   └── sdf_generator.py      # SDF shape generation utilities
+├── src/
+│   ├── components/           # React components
+│   ├── containers/           # Main app container
+│   └── encoded.json         # Pre-computed latent space grid
+└── public/
+    └── models/              # Trained TensorFlow.js model
+```
+
+### Getting Started
+
+1. **Install dependencies**: `npm install`
+2. **Train the model**: Run the Jupyter notebook in `scripts/AutoDecoder.ipynb`
+3. **Start the app**: `npm start`
+4. **Explore**: Hover over the scatter plot to generate shapes in real-time!
+
+### References
+
+This implementation is inspired by and builds upon:
+
+**DeepSDF: Learning Continuous Signed Distance Representations for Shape Completion**  
+Park, J. J., Florence, P., Straub, J., Newcombe, R., & Lovegrove, S. (2019)  
+*IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)*  
+[Paper (PDF)](https://arxiv.org/pdf/1901.05103) | [arXiv:1901.05103](https://arxiv.org/abs/1901.05103)
+
+**Original Interactive Visualization Framework**  
+VAE Latent Space Explorer by Taylor Denouden (April 2018)  
+[GitHub Repository](https://github.com/tayden/VAE-Latent-Space-Explorer)  
+*Original implementation of interactive latent space visualization using VAE for MNIST digits*
+
+_Auto-Decoder adaptation and SDF integration for geometric shapes by Wo Lin (June 2025)_

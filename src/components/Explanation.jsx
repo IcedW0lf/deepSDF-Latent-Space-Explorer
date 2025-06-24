@@ -2,32 +2,31 @@ import React from "react";
 
 import "./Explanation.css";
 
-const Explanation = () => (
-  <div align="left">
+const Explanation = () => (  <div align="left">
     <div className="textbox">
       <div className="header">
         <h2>
-          A brief explanation for those familiar with variational autoencoders
+          A brief explanation of the auto-decoder approach for geometric shapes
         </h2>
       </div>
       <div className="content">
         <p>
-          The above visualization was created using the 2-dimensional bottleneck
-          features of a variational autoencoder. 50 000 handwritten numerical
-          digit images (from MNIST) of size 28x28 were used to train the weights
-          of the autoencoder that restricts the bottleneck features to roughly
-          follow a unit Gaussian. After training, the test set was encoded and
-          the latent space vectors produced were recorded and are displayed in
-          the above scatterplot. Moving your mouse around this plot samples 2
-          latent space vectors from the encoded unit Gaussian and passes these
-          values to the decoder network. The decoder network produces a new
-          generated handwritten digit which is displayed via an html Canvas.
+          The above visualization was created using a 2-dimensional latent space learned by an 
+          auto-decoder model inspired by the DeepSDF paper. Unlike traditional variational autoencoders (VAEs), 
+          auto-decoders directly optimize latent codes for each shape along with the decoder network parameters.
         </p>
         <p>
-          All code runs in the browser using the recently released
-          Tensorflow-js. The model was originally implemented in Keras and
-          imported into the browser. React and D3 are responsible for handling
-          the page updates and drawing the chart visualization.
+          Four geometric shapes (circle, triangle, square, hexagon) were generated as Signed Distance Fields (SDFs) 
+          and used to train the auto-decoder. Each shape has its own learnable latent code that gets optimized 
+          during training. The latent codes displayed in the scatterplot represent the learned 2D embeddings 
+          for these shapes. Moving your mouse around this plot samples latent vectors and passes them to the 
+          decoder network, which generates new geometric shapes displayed via an HTML Canvas.
+        </p>
+        <p>
+          All code runs in the browser using TensorFlow.js. The model was originally implemented in 
+          TensorFlow/Keras and exported for browser use. React and D3 are responsible for handling 
+          the page updates and drawing the chart visualization. The shapes are generated using 
+          mathematical SDF functions that provide perfect geometric representations.
         </p>
       </div>
     </div>
@@ -35,16 +34,54 @@ const Explanation = () => (
     <div className="textbox">
       <div className="header">
         <h2>
-          What is a variational autoencoder?
+          What are auto-decoders and how do they differ from VAEs?
         </h2>
       </div>
       <div className="content">
         <p>
-          For an great explanation, check out{" "}
-          <a href="http://kvfrans.com/variational-autoencoders-explained/">
-            this excellent blog post
+          Auto-decoders, introduced in the DeepSDF paper, take a different approach to learning latent 
+          representations compared to traditional VAEs:
+        </p>
+        <ul>
+          <li><strong>No encoder network:</strong> Instead of learning an encoder to map inputs to latent codes, 
+          auto-decoders directly optimize a latent code for each training example.</li>
+          <li><strong>Joint optimization:</strong> Both the decoder network weights and the latent codes 
+          are optimized simultaneously during training.</li>
+          <li><strong>More direct control:</strong> This approach often provides more direct and interpretable 
+          control over the latent space since each training example has its own optimized representation.</li>
+          <li><strong>Better for geometric data:</strong> Auto-decoders work particularly well with geometric 
+          data like SDFs, where precise reconstruction is important.</li>
+        </ul>
+        <p>
+          For more details on auto-decoders, check out the{" "}
+          <a href="https://arxiv.org/abs/1901.05103" target="_blank" rel="noopener noreferrer">
+            DeepSDF paper
           </a>{" "}
-          by Kevin Frans.
+          by Park et al.
+        </p>
+      </div>
+    </div>
+
+    <div className="textbox">
+      <div className="header">
+        <h2>
+          What are Signed Distance Fields (SDFs)?
+        </h2>
+      </div>
+      <div className="content">
+        <p>
+          Signed Distance Fields are mathematical functions that describe the distance from any point 
+          in space to the nearest surface of a shape. The "signed" part means:
+        </p>
+        <ul>
+          <li><strong>Negative values:</strong> Points inside the shape</li>
+          <li><strong>Zero:</strong> Points exactly on the surface</li>
+          <li><strong>Positive values:</strong> Points outside the shape</li>
+        </ul>
+        <p>
+          SDFs are particularly useful for machine learning because they provide a continuous, 
+          differentiable representation of shapes that captures both interior and exterior structure. 
+          This makes them ideal for generative models that need to learn and synthesize geometric forms.
         </p>
       </div>
     </div>

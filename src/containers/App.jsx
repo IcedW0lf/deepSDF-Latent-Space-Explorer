@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import * as tf from "@tensorflow/tfjs";
-import gaussian from "gaussian";
 
 import ImageCanvas from "../components/ImageCanvas";
 import XYPlot from "../components/XYPlot";
@@ -17,40 +16,61 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.getImage = this.getImage.bind(this);
-
-    this.norm = gaussian(0, 1);
+    this.previousTensor = null; // Keep track of previous tensor
 
     this.state = {
       model: null,
       digitImg: tf.zeros([28, 28]),
-      mu: 0,
-      sigma: 0
+      latentX: -2.5, // Initialize with corner coordinate
+      latentY: -2.5  // Initialize with corner coordinate
     };
   }
-
-  componentDidMount() {
-    tf
-      .loadModel(MODEL_PATH)
-      .then(model => this.setState({ model }))
-      .then(() => this.getImage())
-      .then(digitImg => this.setState({ digitImg }));
+  async componentDidMount() {
+    try {
+      const model = await tf.loadLayersModel(MODEL_PATH);
+      this.setState({ model }, async () => {
+        // Generate initial image after model is loaded and state is updated
+        const digitImg = await this.getImage();
+        this.setState({ digitImg });
+      });
+    } catch (error) {
+      console.error("Error loading model:", error);
+    }
   }
-
   async getImage() {
-    const { model, mu, sigma } = this.state;
-    const zSample = tf.tensor([[mu, sigma]]);
-    return model
-      .predict(zSample)
+    const { model, latentX, latentY } = this.state;
+    if (!model) return tf.zeros([28, 28]);
+    
+    const zSample = tf.tensor2d([[latentX, latentY]]);
+    const prediction = model.predict(zSample);
+    const result = prediction
       .mul(tf.scalar(255.0))
       .reshape([28, 28]);
+    // Clean up intermediate tensors but keep the result
+    zSample.dispose();
+    prediction.dispose();
+    
+    return result;
   }
 
+  componentWillUnmount() {
+    // Clean up tensors when component unmounts
+    if (this.state.digitImg) {
+      this.state.digitImg.dispose();
+    }
+    if (this.previousTensor) {
+      this.previousTensor.dispose();
+    }
+    if (this.state.model) {
+      this.state.model.dispose();
+    }
+  }
   render() {
     return this.state.model === null ? (
       <div>Loading, please wait</div>
     ) : (
       <div className="App">
-        <h1>VAE Latent Space Explorer</h1>
+        <h1>DeepSDF Auto-Decoder Latent Space Explorer</h1>
         <div className="ImageDisplay">
           <ImageCanvas
             width={500}
@@ -68,19 +88,32 @@ class App extends Component {
             yAccessor={d => d[1]}
             colorAccessor={d => d[2]}
             margin={{ top: 20, bottom: 10, left: 10, right: 10 }}
-            onHover={({ x, y }) => {
-              this.setState({ sigma: y, mu: x });
-              this.getImage().then(digitImg => this.setState({ digitImg }));
+            onHover={async ({ x, y }) => {
+              this.setState({ latentY: y, latentX: x });
+              
+              // Store reference to current tensor for later disposal
+              this.previousTensor = this.state.digitImg;
+              
+              const digitImg = await this.getImage();
+              
+              this.setState({ digitImg }, () => {
+                // Use setTimeout to dispose after React has fully updated
+                setTimeout(() => {
+                  if (this.previousTensor && this.previousTensor !== this.state.digitImg) {
+                    this.previousTensor.dispose();
+                    this.previousTensor = null;
+                  }
+                }, 0);
+              });
             }}
-          />
-        </div>
-        <p>Mu: {rounder(this.norm.cdf(this.state.mu), 3)}</p>
-        <p>Sigma: {rounder(this.norm.cdf(this.state.sigma), 3)}</p>
+          />        </div>
+        <p>Latent X: {rounder(this.state.latentX, 3)}</p>
+        <p>Latent Y: {rounder(this.state.latentY, 3)}</p>
         <div className="Explanation">
           <Explanation />
         </div>
 
-        <h5>Created by Taylor Denouden (April 2018)</h5>
+        <h5>Auto-Decoder implementation by Wo Lin(June 2025) • Original VAE by Taylor Denouden (April 2018)</h5>
       </div>
     );
   }

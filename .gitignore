@@ -78,3 +78,69 @@ typings/
 
 # dotenv environment variables file
 .env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Machine Learning / Data Science
+*.h5
+*.hdf5
+*.pkl
+*.pickle
+*.npy
+*.npz
+*.csv
+*.tsv
+*.json.bak
+data/
+checkpoints/
+tensorboard/
+
+# Keep pre-trained models for the web app
+!public/models/
+!scripts/*.h5
+!scripts/*.npy
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.orig

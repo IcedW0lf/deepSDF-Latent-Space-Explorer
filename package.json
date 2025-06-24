@@ -1,33 +1,46 @@
 {
-  "name": "vae-latent-space-explorer",
-  "version": "0.1.0",
+  "name": "deepsdf-auto-decoder-latent-space-explorer",
+  "version": "1.0.0",
   "private": true,
-  "homepage": "http://tayden.github.io/VAE-Latent-Space-Explorer",
+  "description": "Interactive visualization of auto-decoder latent space for 2D geometric shapes using DeepSDF approach",
+  "keywords": ["deepsdf", "auto-decoder", "latent-space", "sdf", "geometric-shapes", "tensorflow", "react"],
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
   "dependencies": {
-    "@tensorflow/tfjs": "^0.9.1",
-    "d3": "^5.1.0",
-    "gaussian": "^1.1.0",
-    "prop-types": "^15.6.1",
-    "react": "^16.3.1",
-    "react-dom": "^16.3.1",
+    "@tensorflow/tfjs": "^4.15.0",
+    "d3": "^7.8.5",
+    "prop-types": "^15.8.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-scripts": "5.0.1"
   },
   "devDependencies": {
-    "eslint": "^4.19.1",
-    "eslint-config-airbnb": "^16.1.0",
-    "eslint-config-prettier": "^2.9.0",
-    "eslint-plugin-import": "^2.11.0",
-    "eslint-plugin-jsx-a11y": "^6.0.3",
-    "eslint-plugin-react": "^7.7.0",
-    "gh-pages": "^1.1.0",
-    "prettier": "^1.12.0"
+    "eslint": "^8.57.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-jsx-a11y": "^6.8.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "gh-pages": "^6.1.1",
+    "prettier": "^3.2.5"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

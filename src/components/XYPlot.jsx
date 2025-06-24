@@ -62,17 +62,15 @@ class XYPlot extends Component {
       .attr("cx", d => xScale(xAccessor(d)))
       .attr("cy", d => yScale(yAccessor(d)))
       .attr("r", 2)
-      .style("fill", d => colorScale(colorAccessor(d)));
-
-    // Add hover callback
+      .style("fill", d => colorScale(colorAccessor(d)));    // Add hover callback
     const hoverRect = svg
       .append("rect")
       .attr("height", height)
       .attr("width", width)
       .style("fill", "transparent");
-
-    hoverRect.on("mousemove", () => {
-      const [x, y] = d3.mouse(hoverRect.node());
+    
+    hoverRect.on("mousemove", (event) => {
+      const [x, y] = d3.pointer(event, hoverRect.node());
       onHover({ y: yScale.invert(y), x: xScale.invert(x) });
     });
   }
