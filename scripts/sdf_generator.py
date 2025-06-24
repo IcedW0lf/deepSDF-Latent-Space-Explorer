@@ -35,10 +35,6 @@ def sdf_to_image(sdf, sharpness=10.0):
     img = sdf
     return img
 
-
-
-
-
 def normalize_sdf_dataset(sdf_data, method='sigmoid'):
     """Normalize SDF values to [0,1] range while preserving structure"""
     
@@ -53,13 +49,13 @@ def normalize_sdf_dataset(sdf_data, method='sigmoid'):
     elif method == 'minmax':
         # Min-max normalization - can be problematic with outliers
         normalized = (sdf_data - sdf_data.min()) / (sdf_data.max() - sdf_data.min())
-      elif method == 'clamp':
+    
+    elif method == 'clamp':
         # Clamp and normalize - loses some SDF information
         clamped = np.clip(sdf_data, -2.0, 2.0)  # Reasonable SDF range
         normalized = (clamped + 2.0) / 4.0  # Map [-2,2] to [0,1]
     
     return normalized.astype(np.float32)
-
 
 def generate_sdf_dataset_sample(n_samples_per_class=1):
     """Generate minimal SDF dataset with just one sample per shape class"""

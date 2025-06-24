@@ -2,6 +2,7 @@
   "name": "deepsdf-auto-decoder-latent-space-explorer",
   "version": "1.0.0",
   "private": true,
+  "homepage": "https://icedw0lf.github.io/deepSDF-Latent-Space-Explorer",
   "description": "Interactive visualization of auto-decoder latent space for 2D geometric shapes using DeepSDF approach",
   "keywords": ["deepsdf", "auto-decoder", "latent-space", "sdf", "geometric-shapes", "tensorflow", "react"],
   "scripts": {

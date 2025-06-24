@@ -1,0 +1,9 @@
+# Ensure JSON files are served with correct MIME type
+<Files "*.json">
+    ForceType application/json
+</Files>
+
+# Ensure binary files are served correctly
+<Files "*.bin">
+    ForceType application/octet-stream
+</Files>

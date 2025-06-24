@@ -1,5 +1,7 @@
 # DeepSDF Auto-Decoder Latent Space Explorer
 
+## [Try the Demo](https://icedw0lf.github.io/deepSDF-Latent-Space-Explorer/)
+
 <p align="center">
   <img alt="DeepSDF Auto-Decoder Latent Space Explorer Demo" src="asserts/autodecoder.gif" width="75%">
 </p>
@@ -9,7 +11,6 @@ This application is an interactive visualization that allows you to explore the 
 
 The visualization generates four basic geometric shapes (circle, triangle, square, hexagon) as signed distance fields (SDFs) and learns a 2D latent space representation that can be explored interactively in the browser.
 
-> **Reference**: Park, J. J., Florence, P., Straub, J., Newcombe, R., & Lovegrove, S. (2019). DeepSDF: Learning Continuous Signed Distance Representations for Shape Completion. *Computer Vision and Pattern Recognition (CVPR)*. [arXiv:1901.05103](https://arxiv.org/pdf/1901.05103)
 
 ### Implementation Details
 
@@ -24,6 +25,21 @@ Key features:
 - **Auto-Decoder Training**: Direct optimization of latent codes without an encoder
 - **Interactive Exploration**: Real-time generation of shapes by hovering over the latent space
 - **TensorFlow.js Integration**: Model runs entirely in the browser using WebGL acceleration
+
+### Why Latent Space Interpolation?
+
+This project demonstrates a key advantage of latent space interpolation over traditional linear interpolation for geometric shapes:
+
+**Semantically Meaningful Interpolation for Manifold-Constrained Shapes**:
+
+ When interpolating directly between shape parameters or pixel values, linear interpolation often creates meaningless "islands" or artifacts that don't represent valid geometric shapes. In contrast, latent space interpolation ensures that all intermediate points lie on the learned manifold of valid shapes.
+
+
+This approach is particularly valuable for:
+- **Shape morphing applications** in computer graphics, architecture, and robotics  that needs to maintain geometric validity
+- **Design exploration** where all variations must be meaningful
+- **Generative modeling** that respects the underlying structure of geometric data
+
 
 ### Technical Stack
 
@@ -61,11 +77,10 @@ This implementation is inspired by and builds upon:
 **DeepSDF: Learning Continuous Signed Distance Representations for Shape Completion**  
 Park, J. J., Florence, P., Straub, J., Newcombe, R., & Lovegrove, S. (2019)  
 *IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)*  
-[Paper (PDF)](https://arxiv.org/pdf/1901.05103) | [arXiv:1901.05103](https://arxiv.org/abs/1901.05103)
+[arXiv:1901.05103](https://arxiv.org/abs/1901.05103)
 
 **Original Interactive Visualization Framework**  
 VAE Latent Space Explorer by Taylor Denouden (April 2018)  
 [GitHub Repository](https://github.com/tayden/VAE-Latent-Space-Explorer)  
-*Original implementation of interactive latent space visualization using VAE for MNIST digits*
 
-_Auto-Decoder adaptation and SDF integration for geometric shapes by Wo Lin (June 2025)_
+_Auto-Decoder adaptation and SDF integration for geometric shapes interpolation from latent space by Wo Lin (June 2025)_

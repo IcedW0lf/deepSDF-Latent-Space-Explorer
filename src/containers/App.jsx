@@ -10,7 +10,7 @@ import "./App.css";
 
 import encodedData from "../encoded.json";
 
-const MODEL_PATH = "models/generatorjs/model.json";
+const MODEL_PATH = process.env.PUBLIC_URL + "/models/generatorjs/model.json";
 
 class App extends Component {
   constructor(props) {
@@ -24,9 +24,19 @@ class App extends Component {
       latentX: -2.5, // Initialize with corner coordinate
       latentY: -2.5  // Initialize with corner coordinate
     };
-  }
-  async componentDidMount() {
+  }  async componentDidMount() {
     try {
+      console.log("Loading model from:", MODEL_PATH);
+      
+      // First check if the model file is accessible
+      const response = await fetch(MODEL_PATH);
+      if (!response.ok) {
+        throw new Error(`Model file not found: ${response.status} ${response.statusText}`);
+      }
+      
+      const modelData = await response.text();
+      console.log("Model JSON first 100 chars:", modelData.substring(0, 100));
+      
       const model = await tf.loadLayersModel(MODEL_PATH);
       this.setState({ model }, async () => {
         // Generate initial image after model is loaded and state is updated
@@ -35,6 +45,7 @@ class App extends Component {
       });
     } catch (error) {
       console.error("Error loading model:", error);
+      console.error("Model path:", MODEL_PATH);
     }
   }
   async getImage() {

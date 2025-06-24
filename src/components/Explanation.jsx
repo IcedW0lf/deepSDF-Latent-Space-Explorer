@@ -77,12 +77,41 @@ const Explanation = () => (  <div align="left">
           <li><strong>Negative values:</strong> Points inside the shape</li>
           <li><strong>Zero:</strong> Points exactly on the surface</li>
           <li><strong>Positive values:</strong> Points outside the shape</li>
-        </ul>
-        <p>
+        </ul>        <p>
           SDFs are particularly useful for machine learning because they provide a continuous, 
           differentiable representation of shapes that captures both interior and exterior structure. 
           This makes them ideal for generative models that need to learn and synthesize geometric forms.
         </p>
+      </div>
+    </div>
+
+    <div className="textbox">
+      <div className="header">
+        <h2>
+          Why Latent Space Interpolation?
+        </h2>
+      </div>
+      <div className="content">
+        <p>
+          This project demonstrates a key advantage of latent space interpolation over traditional 
+          linear interpolation for geometric shapes:
+        </p>
+        <h4>Semantically Meaningful Interpolation and Manifold-Constrained Shapes</h4>
+        <p>
+          When interpolating directly between shape parameters or pixel values, linear interpolation 
+          often creates meaningless "islands" or artifacts that don't represent valid geometric shapes. 
+          In contrast, latent space interpolation ensures that all intermediate points lie on the 
+          learned manifold of valid shapes.
+        </p>
+        <p>
+          This approach is particularly valuable for:
+        </p>
+        <ul>
+          <li>Shape morphing applications in computer graphics, architecture, and robotics that needs to maintain geometric validity</li>
+          <li>Design exploration where all variations must be meaningful</li>
+          <li>Generative modeling that respects the underlying structure of geometric data</li>
+        </ul>
+
       </div>
     </div>
 
